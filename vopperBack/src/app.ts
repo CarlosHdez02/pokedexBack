@@ -1,6 +1,4 @@
 import express from 'express';
-import path from 'path';
-import createPDF from './services/PDFService';
 import { MongoDB } from './data/mongo/init';
 import dotenv from 'dotenv';
 import { ConnectionOptions } from './interfaces/ConnectionOptionsInterface';
@@ -14,10 +12,6 @@ const app = express();
 app.use(express.json());
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
-
-// PDF
-const filePath = path.join(__dirname, '..', 'pdfFiles', 'Pokemon.pdf');
-createPDF(filePath);
 
 // Function to get required environment variables
 function getEnvVariable(name: string): string {
@@ -42,45 +36,10 @@ async function main() {
     await MongoDB.connect(connectionOptions);
 }
 
-// Routes
+// Route test
 app.get('/', (req, res) => {
     res.send('Hello world');
 });
-//Trainers
-const trainers = [
-    { id: 1, name: 'ash' },
-    { id: 2, name: 'Red' },
-    { id: 3, name: 'Misty' }
-];
-
-app.get('/trainers', async (req, res) => {
-    try {
-        if (trainers)
-            return res.json(trainers);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
-//Get pokemons
-
-app.post('/trainers', async (req, res) => {
-    try {
-        const { id, name } = req.body;
-        const trainerId = +id;
-        const newTrainer = {
-            id: trainerId + 1,
-            name: name
-        };
-        trainers.push(newTrainer);
-        return res.json(trainers);
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ error: 'Internal server error' });
-    }
-});
-
 
 app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
