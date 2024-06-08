@@ -6,12 +6,13 @@ const trainerController = new TrainerController();
 
 export class TrainerRoutes {
     public static configureRoutes(app: express.Application): void {
-        router.get('/trainer', trainerController.getTrainers);
-        router.get('/:id', trainerController.getTrainerById);
-        router.post('/trainer', trainerController.createTrainer);
-        router.put('/:id', trainerController.updateTrainer);
-        router.delete('/:id', trainerController.deleteTrainer);
-        
-        app.use('/trainers', router);
+    
+        router.get('/trainers', trainerController.getTrainers);
+        router.post('/trainers', trainerController.createTrainer); // Changed to /trainers to avoid root collision
+        router.get('/trainers/:id', trainerController.getTrainerById);
+        router.put('/trainers/:id', trainerController.updateTrainer);
+        router.delete('/trainers/:id', trainerController.deleteTrainer);
+
+        app.use('/api', router);
     }
 }

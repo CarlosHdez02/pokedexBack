@@ -1,12 +1,8 @@
 import { Response, Request } from "express";
 import { PokemonService } from "../services/PokemonService";
-import { PokemonModel } from "../data/mongo/models/pokemon.model";
-
-
 
 const pokemonService = new PokemonService()
 export class PokemonsController {
-
 
     public async getPokemons(req: Request, res: Response) {
         try {

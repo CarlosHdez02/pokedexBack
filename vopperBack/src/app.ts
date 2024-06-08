@@ -3,6 +3,7 @@ import { MongoDB } from './data/mongo/init';
 import dotenv from 'dotenv';
 import { ConnectionOptions } from './interfaces/ConnectionOptionsInterface';
 import { CORS } from './CORS/cors';
+import { TrainerRoutes } from './Routes/TrainerRoutes';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -20,27 +21,26 @@ function getEnvVariable(name: string): string {
     }
     return value;
 }
+
 async function main() {
-    // Ensure environment variables are defined
+    
     const mongoUrl = getEnvVariable('MONGO_URL');
     const dbName = getEnvVariable('MONGO_DB_NAME');
 
     const connectionOptions: ConnectionOptions = {
-        mongoUrl,
-        dbName
+        mongoUrl: mongoUrl,
+        dbName: dbName
     };
 
     // Starting db
     await MongoDB.connect(connectionOptions);
 }
 
-//CORS
-CORS.configure(app)
+// CORS
+CORS.configure(app);
 
-// Route test
-app.get('/', (req, res) => {
-    res.send('Hello world');
-});
+//Routes
+TrainerRoutes.configureRoutes(app);
 
 app.listen(PORT, () => {
     console.log(`Listening on http://localhost:${PORT}`);
