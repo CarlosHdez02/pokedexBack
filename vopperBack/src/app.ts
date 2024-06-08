@@ -2,8 +2,7 @@ import express from 'express';
 import { MongoDB } from './data/mongo/init';
 import dotenv from 'dotenv';
 import { ConnectionOptions } from './interfaces/ConnectionOptionsInterface';
-import { Request, Response } from 'express';
-
+import { CORS } from './CORS/cors';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -21,7 +20,6 @@ function getEnvVariable(name: string): string {
     }
     return value;
 }
-
 async function main() {
     // Ensure environment variables are defined
     const mongoUrl = getEnvVariable('MONGO_URL');
@@ -35,6 +33,9 @@ async function main() {
     // Starting db
     await MongoDB.connect(connectionOptions);
 }
+
+//CORS
+CORS.configure(app)
 
 // Route test
 app.get('/', (req, res) => {
