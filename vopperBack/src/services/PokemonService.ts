@@ -1,30 +1,48 @@
-import { Request, Response } from 'express';
-import { pokemonInterface, pokemonResults } from "../interfaces/pokemonInterface";
+import { pokemonResults } from "../interfaces/pokemonInterface";
 
 const apiUrl = 'https://pokeapi.co/api/v2/pokemon';
 
 export class PokemonService {
     // Fetch all of the pokemons
-    public getAllPokemons = async () => {
+    public async getAllPokemons(): Promise<pokemonResults[]> {
         try {
             const response = await fetch(apiUrl);
-            const data: pokemonResults[] = await response.json(); // Fetching all pokemons
-            return data
+            if (!response.ok) {
+                throw new Error('Failed to fetch all pokemons');
+            }
+            const data = await response.json();
+            return data.results; 
         } catch (err) {
             console.error('Could not fetch data', err);
+            throw new Error('Failed to fetch all pokemons');
         }
     }
-    // Fetch only one pokemon by its ID
-    public getPokemonById = async (id:string) => {
+
+    public async getPokemonById(id: string) {
         try {
-            const pokemon = await fetch(`${apiUrl}/${id}`);
-            if(!pokemon){
-                return `Pokemon with ${id} not found`
+            const response = await fetch(`${apiUrl}/${id}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch pokemon by ID: ${id}`);
             }
-            const data = await pokemon.json()
-            return data
+            const data = await response.json();
+            return data;
         } catch (err) {
-            console.error('Could not fetch data', err);
+            console.error('Could not find pokemon', err);
+            throw new Error('Failed to fetch pokemon by ID');
+        }
+    }
+
+    public async getPokemonByName(name: string) {
+        try {
+            const response = await fetch(`${apiUrl}/${name}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch pokemon by name: ${name}`);
+            }
+            const data = await response.json();
+            return data;
+        } catch (err) {
+            console.error('Could not find pokemon', err);
+            throw new Error('Failed to fetch pokemon by name');
         }
     }
 }

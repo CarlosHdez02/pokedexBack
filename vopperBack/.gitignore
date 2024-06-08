@@ -1,24 +1,17 @@
-# Dependency directories
+# Node modules
 node_modules/
 
-# OS or editor files
-.DS_Store
-.vscode/
+# Logs
+logs/
 *.log
 
 # Environment variables
 .env
 
-# Build output
-/build/
-/dist/
-/out/
+# MongoDB data
+/mongo
 
-# IDE-specific files
-.idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-
-/node_modules
+# Others
+dist/
+build/
+coverage/
