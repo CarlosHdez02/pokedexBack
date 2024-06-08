@@ -1,23 +1,27 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const trainerSchema = new mongoose.Schema({
-    firstName:{
-        type:String,
-        required:true,
+    id: {
+        type: String, 
+        required: true,
+        unique: true 
     },
-    lastName:{
-        type:String,
-        required:true,
+    firstName: {
+        type: String,
+        required: true,
     },
-    phoneNumber:{
-        type:String,
-        required:true
-
+    lastName: {
+        type: String,
+        required: true,
     },
-    medals:{
-        type:Number,
-        required:true
+    phoneNumber: {
+        type: String,
+        required: true
+    },
+    medals: {
+        type: Number,
+        required: true
     }
+});
 
-})
-export const TrainerModel = mongoose.model('Trainer', trainerSchema)
+export const TrainerModel = mongoose.model('Trainer', trainerSchema);
