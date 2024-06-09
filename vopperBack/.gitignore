@@ -9,7 +9,7 @@ logs/
 .env
 
 # MongoDB data
-/mongo
+mongo/
 
 # Others
 dist/
