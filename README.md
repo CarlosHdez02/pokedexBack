@@ -19,4 +19,9 @@
 
   i deployed my backend on render.com
   my database is hosted on atlas 
-  
+
+  To test on postman:
+  https://pokedexback.onrender.com/api/trainers
+  To test with id:
+  https://pokedexback.onrender.com/api/trainers/
+
