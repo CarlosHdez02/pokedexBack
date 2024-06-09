@@ -7,7 +7,11 @@ export class PokemonService {
     // Fetch all of the pokemons
     public async getAllPokemons(): Promise<pokemonInterface[]> {
         try {
-            const response = await fetch(`${apiUrl}?limit=200`);
+            const response = await fetch(`${apiUrl}?limit=200`, {
+                headers: {
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
             if (!response.ok) {
                 throw new Error('Failed to fetch all pokemons');
             }
