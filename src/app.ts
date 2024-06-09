@@ -19,27 +19,9 @@ app.use(express.json());
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
-// Function to get required environment variables
-function getEnvVariable(name: string): string {
-    const value = process.env[name];
-    if (!value) {
-        throw new Error(`Environment variable ${name} is not defined`);
-    }
-    return value;
-}
-
 async function main() {
-    
-    const mongoUrl = getEnvVariable('MONGO_URL');
-    const dbName = getEnvVariable('MONGO_DB_NAME');
-
-    const connectionOptions: ConnectionOptions = {
-        mongoUrl: mongoUrl,
-        dbName: dbName
-    };
-
     // Starting db
-    await MongoDB.connect(connectionOptions);
+    await MongoDB.connect();
 }
 
 // CORS
