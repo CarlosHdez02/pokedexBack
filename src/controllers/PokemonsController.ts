@@ -6,7 +6,7 @@ const pokemonService = new PokemonService();
 export class PokemonsController {
     public async getPokemons(req: Request, res: Response) {
         try {
-            const pokemons = await pokemonService.getAllPokemons();
+            const pokemons = await pokemonService.getAllPokemons(req.query);
             res.json(pokemons);
         } catch (error) {
             res.status(500).json({ message: 'Failed to fetch pokemons' });

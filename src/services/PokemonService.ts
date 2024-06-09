@@ -1,22 +1,23 @@
 
+import QueryString from "qs";
 import { pokemonInterface, pokemonResults } from "../interfaces/pokemonInterface";
+import axios from "axios";
 
 const apiUrl = 'https://pokeapi.co/api/v2/pokemon';
 
 export class PokemonService {
     // Fetch all of the pokemons
-    public async getAllPokemons(): Promise<pokemonInterface[]> {
+    public async getAllPokemons(params:QueryString.ParsedQs): Promise<pokemonInterface[]> {
         try {
-            const response = await fetch(`${apiUrl}?limit=200`, {
+            const response = await axios.get(`${apiUrl}?limit=${params.limit}&offset=${Number(params.limit) * Number(params.page)}`, {
                 headers: {
                     'Access-Control-Allow-Origin': '*'
                 }
             });
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Failed to fetch all pokemons');
             }
-            const data: pokemonResults = await response.json();
-
+            const data: pokemonResults = await response.data
             const pokemonData = await Promise.all(
                 data.results.map(async (pokemon: { name: string; url: string }) => {
                     const res = await fetch(pokemon.url);
