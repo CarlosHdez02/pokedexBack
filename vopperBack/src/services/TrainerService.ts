@@ -1,9 +1,11 @@
+import mongoose from "mongoose";
 import { TrainerModel } from "../data/mongo/models/trainer.model";
 import { TrainerDTO } from "../DTO/TrainerDTO";
 
 export class TrainerService {
     public async createTrainer(trainerDTO: TrainerDTO) {
         try {
+            const id = new mongoose.Types.ObjectId();
             const newTrainer = await TrainerModel.create(trainerDTO);
             await newTrainer.save();
             return newTrainer;

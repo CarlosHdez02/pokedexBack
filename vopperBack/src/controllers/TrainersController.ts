@@ -52,6 +52,7 @@ export class TrainerController {
         try {
             const { id } = req.params;
             const trainerDTO: TrainerDTO = req.body;
+            console.log('2134', id)
             const updatedTrainer = await trainerService.updateTrainer(id, trainerDTO);
             res.json(updatedTrainer);
         } catch (error:unknown) {
